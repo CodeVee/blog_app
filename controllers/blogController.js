@@ -9,11 +9,6 @@ exports.createBlog = async (req, res) => {
         tags
       } = req.body;
 
-    const text = title + ' ' + description + ' ' + body;
-    const wpm = 100;
-    const words = text.trim().split(/\s+/).length;
-    const time = Math.ceil(words / wpm);
-
     const author = req.user;
 
     const blog = await BlogModel.create({ 
@@ -22,7 +17,6 @@ exports.createBlog = async (req, res) => {
         description,
         body,
         tags,
-        reading_time: time,
         author,
     })
     
@@ -137,13 +131,6 @@ exports.updateBlog = async (req, res) => {
     blog.description = description;
     blog.body = body;
     blog.tags = tags;
-
-    const text = title + ' ' + description + ' ' + body;
-    const wpm = 100;
-    const words = text.trim().split(/\s+/).length;
-    const time = Math.ceil(words / wpm);
-
-    blog.reading_time = time;
 
     await blog.save()
 
